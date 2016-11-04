@@ -23,10 +23,22 @@ import android.widget.Toast;
 
 import static au.edu.holmesglen.kirstine_n.tute3teacherlogin.MainActivity.LOG_TAG;
 
+/**
+ * Handling the enrolment of students to course.
+ * Teacher can input details about student and choose which course to enrol student in.
+ * From this activity the Teacher can go to ClassListActivity on btn click
+ */
 public class EnrolmentActivity extends AppCompatActivity {
 
     public static  DatabaseHelper dbHelper;
     public static SQLiteDatabase db;
+
+    // toast msg
+    public static final String ENROLMENT_SUCCESS = "Student is enrolled";
+    public static final String ID_NOT_UNIQUE = "Student ID must be unique";
+    public static final String FILL_OUT_FIELDS = "Please fill out fields";
+    public static final String RAD_GROUP_ZERO_CHECKED = "Please choose a Course";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,7 @@ public class EnrolmentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // instantiate my database helper
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
 
@@ -79,7 +92,7 @@ public class EnrolmentActivity extends AppCompatActivity {
                     // convert id to integer
                     id = Integer.parseInt(strId);
 
-                    // check for unique student id TODO what about unique id???
+                    // check for unique student id
                     if (isStudentIdUnique(id)) {
                         // instantiate Student object
                         Student student = new Student(id, firstName, lastName);
@@ -96,14 +109,14 @@ public class EnrolmentActivity extends AppCompatActivity {
                         etLastname.setText("");
 
                         // msg user enrol success
-                        Toast.makeText(EnrolmentActivity.this, "Student is enrolled", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnrolmentActivity.this, ENROLMENT_SUCCESS, Toast.LENGTH_SHORT).show();
                     } else {
                         // inform user about student id already taken
-                        Toast.makeText(EnrolmentActivity.this, "Student ID must be unique", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnrolmentActivity.this, ID_NOT_UNIQUE, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // msg to user to fill out input fields
-                    Toast.makeText(EnrolmentActivity.this, "Please fill out fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnrolmentActivity.this, FILL_OUT_FIELDS, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -117,7 +130,7 @@ public class EnrolmentActivity extends AppCompatActivity {
                 // make sure a rad btn is checked (redundant since btn not shows if not checked)
                 if (radGroup.getCheckedRadioButtonId() == -1) {
                     // No rad button is checked yet, so display msg to user
-                    Toast.makeText(EnrolmentActivity.this, "Please choose a Course", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnrolmentActivity.this, RAD_GROUP_ZERO_CHECKED, Toast.LENGTH_SHORT).show();
                 } else {  // one rad btn is checked
                     startClassListActivity(getIdToUseAsForeignKey(radGroup));
                 }
@@ -126,6 +139,15 @@ public class EnrolmentActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * based on which rad btn is selected in radio group get the text for the rad button
+     * and get courseId for record with that course name, this will be the foreign key for
+     * the student record
+     *
+     * @param radGroup  the group containing our rad btn's
+     * @return  integer representing the foreign key to be used in student record
+     */
     public int getIdToUseAsForeignKey(RadioGroup radGroup) {
         // in Student table foreign key course id
         int fkCourseId;
@@ -143,6 +165,13 @@ public class EnrolmentActivity extends AppCompatActivity {
         return fkCourseId;
     }
 
+
+    /**
+     * check if id input is unique
+     *
+     * @param id  the id to check
+     * @return  true if id is not present in student table, false if present
+     */
     public boolean isStudentIdUnique(int id) {
         Log.v(LOG_TAG, "into isStudentIdUnique");
 
@@ -160,6 +189,11 @@ public class EnrolmentActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * create intent and start ClassListActivity showing students in a specific course
+     *
+     * @param courseId  integer representing the id for the specific course we are interested in
+     */
     public void startClassListActivity(int courseId) {
         Intent intent;
         intent = new Intent(this, ClassListActivity.class);
@@ -168,6 +202,9 @@ public class EnrolmentActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * make sure to close db on destroy
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
