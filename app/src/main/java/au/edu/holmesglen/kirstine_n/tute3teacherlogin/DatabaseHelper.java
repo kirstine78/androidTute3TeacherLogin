@@ -1,5 +1,13 @@
 package au.edu.holmesglen.kirstine_n.tute3teacherlogin;
 
+/**
+ * Student: Kirstine B. Nielsen
+ * Id:      100527988
+ * Date:    04.11.2016
+ * Name:    Tute 3 - Enrolment System
+ * Version: 1
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,9 +21,8 @@ import java.util.List;
 import static au.edu.holmesglen.kirstine_n.tute3teacherlogin.MainActivity.LOG_TAG;
 
 /**
- * Created by Kirsti on 4/11/2016.
+ * Class to help us interact with our database
  */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Logcat tag
@@ -62,13 +69,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             " VALUES (2, 'Software Development');";
 
 
+    /**
+     * constructor
+     * @param context
+     */
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         // creating required tables
         db.execSQL(CREATE_TABLE_STUDENT);
         db.execSQL(CREATE_TABLE_COURSE);
@@ -77,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_RECORD_COURSE_NET);
         db.execSQL(INSERT_RECORD_COURSE_SOFT);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -88,8 +100,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
-     * Creating a student
+
+    /**
+     * create a student in db
+     * @param student  student obj
+     * @param courseId  foreign key
+     * @return
      */
     public long createStudent(Student student, int courseId) {
         Log.v(LOG_TAG, "fk course id: " + courseId);
@@ -108,14 +124,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return studId;
     }
 
+
     /**
-     * should return zero or max one in the list
-     * @param studentId
-     * @return
+     * get number of records from student table with a specific student id
+     * will return zero or max one
+     * @param studentId   the stud id to include in where clause
+     * @return  integer representing number of records (zero or one)
      */
     public int getAmountOfStudentsById(int studentId) {
-//        List<Student> students = new ArrayList<Student>();
-
         int amount;
 
         String selectQuery = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + KEY_ID
@@ -128,27 +144,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         amount = cursor.getCount();
 
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Student student = new Student();
-//                student.setId(cursor.getInt((cursor.getColumnIndex(KEY_ID))));
-//                student.setFirstName((cursor.getString(cursor.getColumnIndex(KEY_FIRSTNAME))));
-//                student.setLastName(cursor.getString(cursor.getColumnIndex(KEY_LASTNAME)));
-//
-//                // adding to todo list
-//                students.add(student);
-//            } while (cursor.moveToNext());
-//        }
-
         Log.v(LOG_TAG, "students returned: " + amount);
         return amount;
 
     }
 
-    /*
-     * getting all students in a certain course
-     * */
+
+    /**
+     * get all students in a certain course
+     * @param courseId  the course id to include in where clause
+     * @return  list of student objects
+     */
     public List<Student> getAllStudentsByCourse(int courseId) {
         List<Student> students = new ArrayList<Student>();
 
@@ -178,6 +184,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * get course id for record that matches a specific course name
+     * @param courseName  course to include in where clause
+     * @return  integer representing the course id
+     */
     public int getCourseId(String courseName) {
         int id;
 
@@ -204,7 +215,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // closing database
+    /**
+     * handle the closing of our db
+     */
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null && db.isOpen())

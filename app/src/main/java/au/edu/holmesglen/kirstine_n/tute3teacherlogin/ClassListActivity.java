@@ -23,6 +23,9 @@ import java.util.List;
 
 import static au.edu.holmesglen.kirstine_n.tute3teacherlogin.MainActivity.LOG_TAG;
 
+/**
+ * Shows a list of Students in a particular Course
+ */
 public class ClassListActivity extends AppCompatActivity {
 
     @Override
@@ -92,6 +95,10 @@ public class ClassListActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * creates intent and starts EnrolmentActivity
+     */
     public void startEnrolmentActivity() {
         Intent intent;
         intent = new Intent(this, EnrolmentActivity.class);
