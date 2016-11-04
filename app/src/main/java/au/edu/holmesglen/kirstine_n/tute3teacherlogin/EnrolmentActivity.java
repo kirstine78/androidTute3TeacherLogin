@@ -67,7 +67,7 @@ public class EnrolmentActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.v(LOG_TAG, "Radio button clicked");
+                Log.i(LOG_TAG, "Radio button clicked");
 
                 // show linear layout containing the rest of the input form
                 llView.setVisibility(View.VISIBLE);
@@ -84,7 +84,7 @@ public class EnrolmentActivity extends AppCompatActivity {
                 String strId = etId.getText().toString();
                 String firstName = etFirstname.getText().toString();
                 String lastName = etLastname.getText().toString();
-                Log.v(LOG_TAG, "id: " + strId);
+                Log.i(LOG_TAG, "id: " + strId);
 
                 // no proper validation, rely on good user input
                 if (!strId.equals("") && !firstName.equals("") && !lastName.equals("")) {
@@ -99,7 +99,7 @@ public class EnrolmentActivity extends AppCompatActivity {
 
                         // depending on which rad btn for course is checked, get the fk
                         int fkCourseId = getIdToUseAsForeignKey(radGroup);
-                        Log.v(LOG_TAG, "fkCourseId: " + fkCourseId);
+                        Log.i(LOG_TAG, "fkCourseId: " + fkCourseId);
 
                         dbHelper.createStudent(student, fkCourseId);
 
@@ -125,7 +125,7 @@ public class EnrolmentActivity extends AppCompatActivity {
         btnClasslist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v(LOG_TAG, "classlist button clicked");
+                Log.i(LOG_TAG, "classlist button clicked");
 
                 // make sure a rad btn is checked (redundant since btn not shows if not checked)
                 if (radGroup.getCheckedRadioButtonId() == -1) {
@@ -173,16 +173,16 @@ public class EnrolmentActivity extends AppCompatActivity {
      * @return  true if id is not present in student table, false if present
      */
     public boolean isStudentIdUnique(int id) {
-        Log.v(LOG_TAG, "into isStudentIdUnique");
+        Log.i(LOG_TAG, "into isStudentIdUnique");
 
         boolean isUnique = false;
 
         // find out if entered id already exists in database
         if (dbHelper.getAmountOfStudentsById(id) < 1) {
-            Log.v(LOG_TAG, "id is Unique");
+            Log.i(LOG_TAG, "id is Unique");
             isUnique = true;
         } else {
-            Log.v(LOG_TAG, "id is NOT unique");
+            Log.i(LOG_TAG, "id is NOT unique");
 
         }
         return isUnique;

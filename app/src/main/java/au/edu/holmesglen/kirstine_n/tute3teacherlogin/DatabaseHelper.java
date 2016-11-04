@@ -108,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return
      */
     public long createStudent(Student student, int courseId) {
-        Log.v(LOG_TAG, "fk course id: " + courseId);
+        Log.i(LOG_TAG, "fk course id: " + courseId);
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -120,7 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // insert row
         long studId = db.insert(TABLE_STUDENT, null, values);
 
-        Log.v(LOG_TAG, "student rec created in db, id: " + studId);
+        Log.i(LOG_TAG, "student rec created in db, id: " + studId);
         return studId;
     }
 
@@ -137,14 +137,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + KEY_ID
                 + " = " + studentId +  ";";
 
-        Log.e(LOG, selectQuery);
+        Log.i(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         amount = cursor.getCount();
 
-        Log.v(LOG_TAG, "students returned: " + amount);
+        Log.i(LOG_TAG, "students returned: " + amount);
         return amount;
 
     }
@@ -161,7 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + KEY_FK_COURSE_ID
                 + " = " + courseId +  ";";
 
-        Log.e(LOG, selectQuery);
+        Log.i(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -179,7 +179,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        Log.v(LOG_TAG, "students returned: " + students.size());
+        Log.i(LOG_TAG, "students returned: " + students.size());
         return students;
     }
 
@@ -195,21 +195,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_COURSE + " WHERE " + KEY_COURSE_NAME
                 + " = '" + courseName +  "';";
 
-        Log.e(LOG, selectQuery);
+        Log.i(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         int count = cursor.getCount();
 
-        Log.e(LOG, "the count: " + count);
+        Log.i(LOG, "the count: " + count);
 
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-        Log.e(LOG, "the id: " + id);
+        Log.i(LOG, "the id: " + id);
 
         return id;
     }
