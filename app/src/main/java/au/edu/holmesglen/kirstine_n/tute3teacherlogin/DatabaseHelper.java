@@ -108,6 +108,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return studId;
     }
 
+    /**
+     * should return zero or max one in the list
+     * @param studentId
+     * @return
+     */
+    public int getAmountOfStudentsById(int studentId) {
+//        List<Student> students = new ArrayList<Student>();
+
+        int amount;
+
+        String selectQuery = "SELECT * FROM " + TABLE_STUDENT + " WHERE " + KEY_ID
+                + " = " + studentId +  ";";
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        amount = cursor.getCount();
+
+//        // looping through all rows and adding to list
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Student student = new Student();
+//                student.setId(cursor.getInt((cursor.getColumnIndex(KEY_ID))));
+//                student.setFirstName((cursor.getString(cursor.getColumnIndex(KEY_FIRSTNAME))));
+//                student.setLastName(cursor.getString(cursor.getColumnIndex(KEY_LASTNAME)));
+//
+//                // adding to todo list
+//                students.add(student);
+//            } while (cursor.moveToNext());
+//        }
+
+        Log.v(LOG_TAG, "students returned: " + amount);
+        return amount;
+
+    }
+
     /*
      * getting all students in a certain course
      * */

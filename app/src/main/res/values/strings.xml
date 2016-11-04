@@ -21,6 +21,8 @@
 
     <string name="class_list_headline_networking">Students enrolled in Networking</string>
     <string name="class_list_headline_soft_dev">Students enrolled in Software</string>
+    <string name="class_list_btn_back">Back</string>
+
 
 
 </resources>

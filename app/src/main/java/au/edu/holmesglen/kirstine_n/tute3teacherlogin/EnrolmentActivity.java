@@ -75,19 +75,34 @@ public class EnrolmentActivity extends AppCompatActivity {
                 // no proper validation, rely on good user input
                 if (!strId.equals("") && !firstName.equals("") && !lastName.equals("")) {
 
-                    // convert id
+                    // convert id to integer
                     id = Integer.parseInt(strId);
 
-                    // instantiate Student object
-                    Student student = new Student(id, firstName, lastName);
+                    // check for unique student id TODO what about unique id???
+                    if (isStudentIdUnique(id)) {
+                        // instantiate Student object
+                        Student student = new Student(id, firstName, lastName);
 
-                    // depending on which rad btn for course is checked, get the fk
-                    int fkCourseId = getIdToUseAsForeignKey(radGroup);
-                    Log.v(LOG_TAG, "fkCourseId: " + fkCourseId);
+                        // depending on which rad btn for course is checked, get the fk
+                        int fkCourseId = getIdToUseAsForeignKey(radGroup);
+                        Log.v(LOG_TAG, "fkCourseId: " + fkCourseId);
 
-                    dbHelper.createStudent(student, fkCourseId);
+                        dbHelper.createStudent(student, fkCourseId);
 
-                    // TODO what about unique id???
+                        // empty input fields
+                        etId.setText("");
+                        etFirstname.setText("");
+                        etLastname.setText("");
+
+                        // msg user enrol success
+                        Toast.makeText(EnrolmentActivity.this, "Student is enrolled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // inform user about student id already taken
+                        Toast.makeText(EnrolmentActivity.this, "Student ID must be unique", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // msg to user to fill out input fields
+                    Toast.makeText(EnrolmentActivity.this, "Please fill out fields", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -127,11 +142,34 @@ public class EnrolmentActivity extends AppCompatActivity {
         return fkCourseId;
     }
 
+    public boolean isStudentIdUnique(int id) {
+        Log.v(LOG_TAG, "into isStudentIdUnique");
+
+        boolean isUnique = false;
+
+        // find out if entered id already exists in database
+        if (dbHelper.getAmountOfStudentsById(id) < 1) {
+            Log.v(LOG_TAG, "id is Unique");
+            isUnique = true;
+        } else {
+            Log.v(LOG_TAG, "id is NOT unique");
+
+        }
+        return isUnique;
+    }
+
 
     public void startClassListActivity(int courseId) {
         Intent intent;
         intent = new Intent(this, ClassListActivity.class);
         intent.putExtra("courseId", courseId);  // pass into activity
         startActivity(intent);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.closeDB();
     }
 }  // end class EnrolmentActivity

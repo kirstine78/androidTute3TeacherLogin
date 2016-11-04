@@ -57,7 +57,7 @@ public class ClassListActivity extends AppCompatActivity {
             {
                 s = " SOFT";
             }
-            values[i] = studentsList.get(i).getFirstName() + " " + studentsList.get(i).getLastName() + s;
+            values[i] = studentsList.get(i).getId() + " " + studentsList.get(i).getFirstName() + " " + studentsList.get(i).getLastName() + s;
         }
 
         ListView listView = (ListView) findViewById(R.id.myClassList);
