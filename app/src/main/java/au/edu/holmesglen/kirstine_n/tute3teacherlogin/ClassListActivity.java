@@ -1,5 +1,13 @@
 package au.edu.holmesglen.kirstine_n.tute3teacherlogin;
 
+/**
+ * Student: Kirstine B. Nielsen
+ * Id:      100527988
+ * Date:    04.11.2016
+ * Name:    Tute 3 - Enrolment System
+ * Version: 1
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,9 +45,9 @@ public class ClassListActivity extends AppCompatActivity {
 
         // find out which headline to apply to text view
         if (courseId == 1) {
-            tvHeadline.setText("Students enrolled in Networking");
+            tvHeadline.setText(getResources().getString(R.string.class_list_headline_networking));
         } else {
-            tvHeadline.setText("Students enrolled in Software");
+            tvHeadline.setText(getResources().getString(R.string.class_list_headline_soft_dev));
         }
 
         // get all student objects by course id

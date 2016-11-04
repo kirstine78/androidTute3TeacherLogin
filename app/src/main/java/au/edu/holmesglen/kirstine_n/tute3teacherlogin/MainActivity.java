@@ -5,6 +5,7 @@ package au.edu.holmesglen.kirstine_n.tute3teacherlogin;
  * Id:      100527988
  * Date:    04.11.2016
  * Name:    Tute 3 - Enrolment System
+ * Version: 1
  */
 
 import android.content.Context;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 /**
  * Handling the login of teacher.
  * Will check if login credentials are ok.
- * If ok then user is directed to another Activity.
+ * If ok then user is directed to another EnrolmentActivity.
  * Not ok credentials leads to no redirect. Displays login error message to user.
  */
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String MY_PREFERENCES = "MyPrefs";
     public static final String USERNAME = "usernameKey";
     public static final String PASSWORD = "passwordKey";
+
+    // wrong credential msg
+    public static final String WRONG_CREDENTIALS = "Wrong credentials, try again";
 
     // decl ref to SharedPreferences class
     SharedPreferences sharedPreferences;
@@ -65,46 +69,42 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // check if there are any stored values for username and password
-                // if there are
                 if (areCredentialsStoredInSharedPreferences()) {
-
-                    // compare user input with stored values
-                    if (areCredentialsCorrect()) {
-                        // logged in ok, start EnrolmentActivity
-                        startEnrolmentActivity();
-                    } else {  // not ok
-                        // display toast msg indicating wrong credentials
-                        Toast.makeText(MainActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
-                    }
+                    handleLoginProcess();
                 } else {  // username and password are currently NOT saved in Shared preferences
                     // save "teacher" and "pass", because that is business rule for this app
                     saveCredentialsInSharedPreferences(view);
 
-                    // compare user input with stored values
-                    if (areCredentialsCorrect()) {
-                        // logged in ok, start EnrolmentActivity
-                        startEnrolmentActivity();
-                    } else {  // not ok
-                        // display toast msg indicating wrong credentials
-                        Toast.makeText(MainActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
-                    }
+                    // then handle the login
+                    handleLoginProcess();
                 }
             }
         });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }  // end onCreate
 
 
-    public boolean areCredentialsCorrect() {
+    /**
+     * will check if credentials are correct.
+     * if correct then EnrolmentActivity is started
+     * else incorrect a toast msg is displayed
+     */
+    public void handleLoginProcess() {
+        // compare user input with stored values
+        if (areCredentialsCorrect()) {
+            // logged in ok, start EnrolmentActivity
+            startEnrolmentActivity();
+        } else {  // not ok
+            // display toast msg indicating wrong credentials
+            Toast.makeText(MainActivity.this, WRONG_CREDENTIALS, Toast.LENGTH_SHORT).show();
+        }
+    }
 
+
+    /**
+     * compare input for username and password with storage values
+     * @return  true if match, false if not match
+     */
+    public boolean areCredentialsCorrect() {
         // compare input with storage values for username and password
         boolean okCredentials = etUsername.getText().toString().equals(getUsernameFromSharedPreferencesStorage()) &&
                 etPassword.getText().toString().equals(getPasswordFromSharedPreferencesStorage());
@@ -113,9 +113,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // custom method to get preferences
+    /**
+     * check if credentials are stored in shared preferences
+     * @return  true if stored, false if not stored
+     */
     public boolean areCredentialsStoredInSharedPreferences() {
-
         boolean isStored = false;
 
         // To retrieve an already saved shared preference we use the contains() method
@@ -127,8 +129,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * get the username stored in shared preferences
+     * @return  String representing the username
+     */
     public String getUsernameFromSharedPreferencesStorage() {
-
         String username = "";
 
         // To retrieve an already saved shared preference we use the contains() method
@@ -140,8 +145,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * get the password stored in shared preferences
+     * @return  String representing the password
+     */
     public String getPasswordFromSharedPreferencesStorage() {
-
         String password = "";
 
         // To retrieve an already saved shared preference we use the contains() method
@@ -153,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * saves the correct (business rules says teacher/pass) values in shared preferences
+     * @param view
+     */
     public void saveCredentialsInSharedPreferences(View view) {
         String username = "teacher";
         String password = "pass";
@@ -168,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * will create new intent and start EnrolmentActivity
+     */
     public void startEnrolmentActivity() {
         Intent i;
         i = new Intent(this, EnrolmentActivity.class);

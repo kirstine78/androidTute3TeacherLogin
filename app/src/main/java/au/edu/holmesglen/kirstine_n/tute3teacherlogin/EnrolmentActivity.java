@@ -5,6 +5,7 @@ package au.edu.holmesglen.kirstine_n.tute3teacherlogin;
  * Id:      100527988
  * Date:    04.11.2016
  * Name:    Tute 3 - Enrolment System
+ * Version: 1
  */
 
 import android.content.Intent;
