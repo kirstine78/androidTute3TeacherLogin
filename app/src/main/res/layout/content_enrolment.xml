@@ -18,13 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enrolment_headline"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"/>
 
     <RadioGroup
         android:id="@+id/radGroup_courses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
+        android:layout_marginBottom="32dp"
         android:orientation="vertical">
 
         <RadioButton android:id="@+id/radio_networking"
@@ -43,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="32dp"
         android:visibility="invisible">
 
         <LinearLayout
@@ -103,15 +108,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="32dp"
             android:gravity="center">
-
 
             <Button
                 android:id="@+id/btn_enrol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/enrolment_btn_enrol"/>
-
 
             <Button
                 android:id="@+id/btn_classlist"

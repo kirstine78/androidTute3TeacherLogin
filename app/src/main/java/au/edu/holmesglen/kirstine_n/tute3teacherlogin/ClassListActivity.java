@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,5 +71,22 @@ public class ClassListActivity extends AppCompatActivity {
 
         // assign adapter to ListView
         listView.setAdapter(adapter);
+
+        // back button
+        Button btnBack = (Button) findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to EnrolmentActivity
+                startEnrolmentActivity();
+            }
+        });
+    }
+
+    public void startEnrolmentActivity() {
+        Intent intent;
+        intent = new Intent(this, EnrolmentActivity.class);
+        startActivity(intent);
     }
 }
