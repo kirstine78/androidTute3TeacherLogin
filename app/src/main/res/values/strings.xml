@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Tute3TeacherLogin</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="main_title">Holmesglen IT Enrolment System</string>
+    <string name="main_headline_login">Teacher Login</string>
+    <string name="main_label_username">Username</string>
+    <string name="main_label_password">Password</string>
+    <string name="main_btn_login">Login</string>
+    <string name="title_activity_enrolment">EnrolmentActivity</string>
+
+    <string name="enrolment_headline">Select Course to Enrol Student</string>
+    <string name="enrolment_label_networking">Networking</string>
+    <string name="enrolment_label_software_dev">Software Development</string>
+    <string name="enrolment_label_student_id">Student ID</string>
+    <string name="enrolment_label_firstname">First Name</string>
+    <string name="enrolment_label_lastname">Last Name</string>
+    <string name="enrolment_btn_enrol">Enrol</string>
+    <string name="enrolment_btn_classlist">Classlist</string>
+    <string name="title_activity_class_list">ClassListActivity</string>
+
+    <string name="class_list_headline_networking">Students enrolled in Networking</string>
+    <string name="class_list_headline_soft_dev">Students enrolled in Software</string>
+
+
+</resources>
