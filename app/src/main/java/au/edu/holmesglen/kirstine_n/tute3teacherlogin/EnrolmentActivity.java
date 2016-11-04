@@ -84,7 +84,6 @@ public class EnrolmentActivity extends AppCompatActivity {
                 String strId = etId.getText().toString();
                 String firstName = etFirstname.getText().toString();
                 String lastName = etLastname.getText().toString();
-                Log.i(LOG_TAG, "id: " + strId);
 
                 // no proper validation, rely on good user input
                 if (!strId.equals("") && !firstName.equals("") && !lastName.equals("")) {
@@ -173,16 +172,14 @@ public class EnrolmentActivity extends AppCompatActivity {
      * @return  true if id is not present in student table, false if present
      */
     public boolean isStudentIdUnique(int id) {
-        Log.i(LOG_TAG, "into isStudentIdUnique");
-
         boolean isUnique = false;
 
         // find out if entered id already exists in database
         if (dbHelper.getAmountOfStudentsById(id) < 1) {
-            Log.i(LOG_TAG, "id is Unique");
+            Log.i(LOG_TAG, "student id is Unique");
             isUnique = true;
         } else {
-            Log.i(LOG_TAG, "id is NOT unique");
+            Log.i(LOG_TAG, "student id is NOT Unique");
 
         }
         return isUnique;

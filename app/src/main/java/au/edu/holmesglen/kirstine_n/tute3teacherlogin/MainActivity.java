@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,11 +90,15 @@ public class MainActivity extends AppCompatActivity {
      * else incorrect a toast msg is displayed
      */
     public void handleLoginProcess() {
+        Log.i(LOG_TAG, "in handleLoginProcess");
+
         // compare user input with stored values
         if (areCredentialsCorrect()) {
+            Log.i(LOG_TAG, "credentials ok");
             // logged in ok, start EnrolmentActivity
             startEnrolmentActivity();
         } else {  // not ok
+            Log.i(LOG_TAG, "credentials wrong");
             // display toast msg indicating wrong credentials
             Toast.makeText(MainActivity.this, WRONG_CREDENTIALS, Toast.LENGTH_SHORT).show();
         }

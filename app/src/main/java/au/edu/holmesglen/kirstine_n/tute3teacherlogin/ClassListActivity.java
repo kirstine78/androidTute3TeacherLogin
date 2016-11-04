@@ -35,14 +35,14 @@ public class ClassListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Log.i(LOG_TAG, "in class list activity");
+        Log.i(LOG_TAG, "in ClassListActivity");
 
         // we need this to get the param passed from Enrolment Activity
         Intent intent = getIntent();
 
         // put one as default
         int courseId = intent.getIntExtra("courseId", 1);  // get the param passed from Enrolment Activity
-        Log.i(LOG_TAG, "courseId: " + courseId);
+        Log.i(LOG_TAG, "show student for courseId: " + courseId);
 
         TextView tvHeadline = (TextView) findViewById(R.id.tv_classlist);
 

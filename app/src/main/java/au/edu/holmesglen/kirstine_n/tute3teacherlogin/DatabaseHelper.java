@@ -108,7 +108,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return
      */
     public long createStudent(Student student, int courseId) {
-        Log.i(LOG_TAG, "fk course id: " + courseId);
+        Log.i(LOG_TAG, "in createStudent");
+        Log.i(LOG_TAG, "student has fk courseId: " + courseId);
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -120,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // insert row
         long studId = db.insert(TABLE_STUDENT, null, values);
 
-        Log.i(LOG_TAG, "student rec created in db, id: " + studId);
+        Log.i(LOG_TAG, "student record created in db, student id: " + studId);
         return studId;
     }
 
@@ -144,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         amount = cursor.getCount();
 
-        Log.i(LOG_TAG, "students returned: " + amount);
+        Log.i(LOG_TAG, "students records returned: " + amount);
         return amount;
 
     }
@@ -179,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        Log.i(LOG_TAG, "students returned: " + students.size());
+        Log.i(LOG_TAG, "students records returned: " + students.size());
         return students;
     }
 
@@ -200,16 +202,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        int count = cursor.getCount();
-
-        Log.i(LOG, "the count: " + count);
-
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-        Log.i(LOG, "the id: " + id);
+        Log.i(LOG, "courseId: " + id);
 
         return id;
     }
@@ -219,6 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * handle the closing of our db
      */
     public void closeDB() {
+        Log.i(LOG, "in closeDB");
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null && db.isOpen())
             db.close();
