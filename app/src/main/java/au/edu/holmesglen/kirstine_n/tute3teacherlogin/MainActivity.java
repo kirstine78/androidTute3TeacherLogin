@@ -110,9 +110,13 @@ public class MainActivity extends AppCompatActivity {
      * @return  true if match, false if not match
      */
     public boolean areCredentialsCorrect() {
+        Log.i(LOG_TAG, "in areCredentialsCorrect");
+
         // compare input with storage values for username and password
         boolean okCredentials = etUsername.getText().toString().equals(getUsernameFromSharedPreferencesStorage()) &&
                 etPassword.getText().toString().equals(getPasswordFromSharedPreferencesStorage());
+
+        Log.i(LOG_TAG, "okCredentials: " + okCredentials);
 
         return okCredentials;
     }

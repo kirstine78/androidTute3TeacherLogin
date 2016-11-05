@@ -176,7 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 student.setFirstName((cursor.getString(cursor.getColumnIndex(KEY_FIRSTNAME))));
                 student.setLastName(cursor.getString(cursor.getColumnIndex(KEY_LASTNAME)));
 
-                // adding to todo list
+                // adding to students list
                 students.add(student);
             } while (cursor.moveToNext());
         }
